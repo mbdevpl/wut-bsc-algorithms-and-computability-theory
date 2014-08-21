@@ -1,0 +1,435 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc} %sets input encoding to UTF-8, needed for Polish, Japanese, etc.
+\usepackage[T1]{fontenc} %needed for Polish characters
+\usepackage{lmodern} %this font handles Polish characters properly
+\usepackage[cm]{fullpage} %very small margins (around 1.5cm)
+\usepackage{multicol} %use \begin{multicols}{#} for # columns
+\usepackage{amssymb} %big bracets and other useful symbols
+\usepackage{amsmath} %some mathematical symbols
+\usepackage{enumitem} %remove vertical space in itemize with: [noitemsep,nolistsep]
+
+\newcommand{\separator}{\noindent \line(1,0){529}}
+
+\begin{document}
+
+\title{Theory for \emph{Algorithms \& Computability} course on MiNI on WUT}
+\date{\today}
+\author{Mateusz Bysiek, Computer Science, MiNI, WUT}
+\maketitle
+
+\tableofcontents
+
+\pagebreak[4]
+
+%\section{A\&C Theory}
+
+\section{Introductory test}
+
+%\subsubsection{Problem, instance, algorithm}
+
+\begin{multicols}{2}
+
+\paragraph{Problem}
+cannot be defined exactly. In most broad meaning it is something unknown for which an answer is
+needed, and such answer can be sometimes given in form of an algorithm. Problem can be defined as a
+set of questions of similar kind. Problem is a set of instances.
+
+\paragraph{Decision problem} is a problem, for which the answer is either ``Yes'' or ``No''.
+
+\paragraph{Optimization problem} is to find solutions and choose the most optimal (the best, ideal,
+etc.) one.
+
+\paragraph{Instance of a problem}
+Is a concrete question from a set of questions that make a full problem.
+
+\paragraph{Countability of a set of instances}
+\ldots the set of instances of a problem can sometimes be shown to be countable, for example in case
+of sorting problem for the set of natural numbers.
+
+\paragraph{Algorithm}
+solves all instances of the problem. It is a description of how to solve instances of a problem,
+based on very basic operations. It is a sequence of instructions.
+
+\end{multicols}
+
+\separator
+
+%\subsubsection{Operations}
+
+Having a problem $\Pi$, set of instances of that problem $D_\Pi$, and instance $d$ of a problem
+$\Pi$, i.e. $d \in D_\Pi$ \ldots
+
+\begin{multicols}{2}
+
+\paragraph{Elementary operation}
+is an indivisible operation on two basic data cells. Depending on cost criteria used, it takes unit
+or logarithmic time.
+
+%\end{multicols}
+
+%\separator
+
+%\begin{multicols}{2}
+
+\paragraph{Time cost function}
+$C_t(d) = $ number of elementary operations' executions for the instance $d$.
+\begin{gather*}
+C_t : D_\Pi \rightarrow N
+\end{gather*}
+
+Cost function is a function that goes from set of instances of problem to natural numbers. The value
+of cost time function is a number of executions of elementary operations needed to solve given
+instance of a problem.
+
+\paragraph{Space cost function}
+$C_s(d) = $ number of cells of memory used to solve the instance $d$.
+\begin{gather*}
+C_s : D_\Pi \rightarrow N
+\end{gather*}
+
+\paragraph{Dominant operations}
+of algorithm $A$ is a set of operations that are performed 
+if any other operation of $A$ is performed.
+
+In other words, $\exists k_1, k_2: k_1 d_t(d) \leq C_t(d) \leq k_2 d_t(d)$, where $C_t(d)$ is a
+value of cost function for $d$, and $d_t(d)$ is number of dominant operations' executions for the
+same instance.
+
+\end{multicols}
+
+\separator
+
+%\subsubsection{Complexity}
+\begin{multicols}{2}
+
+\paragraph{Pessimistic time complexity}
+is the maximum possible result of the time cost function for a given size of input $n$, 
+therefore time complexity is a function of $n$.
+\begin{gather*}
+T_p : | D_\Pi | \rightarrow N \\
+T_p(n) = \sup \left\{ C_t(d) : d \in D_\Pi \wedge |d| = n \right\}
+\end{gather*}
+
+\paragraph{Average time complexity}
+\begin{gather*}
+T_a : | D_\Pi | \rightarrow R_+ \\
+T_a(n) = \sum_{d \in D_\Pi, |d|=n} C_t(d) * pr(d)
+\end{gather*}
+
+Where $pr(d)$ is a probability of encountering a specific instance $d$. In case of average
+complexity the set of all instances $D_\Pi$ is finite.
+
+\paragraph{Pessimistic space complexity}
+is the maximum possible result of the space cost function for a given size of input $n$, 
+therefore space complexity is a function of $n$.
+\begin{gather*}
+S_p : | D_\Pi | \rightarrow N \\
+S_p(n) = \sup \left\{  C_s(d) : d \in D_\Pi \wedge |d| = n \right\}
+\end{gather*}
+
+\end{multicols}
+
+\separator
+
+%\subsubsection{Cost criteria}
+
+\begin{multicols}{2}
+
+\paragraph{Uniform cost criteria}
+Elementary operation needs constant time $t = 1$, ``unit time''.
+
+\paragraph{Logarithmic cost criteria}
+Sum of lengths of arguments (or logarithms of their values) is the time needed to perform
+an elementary operation.
+
+\end{multicols}
+
+\pagebreak[4]
+
+\section{Test \#1}
+
+\subsection{RAM - random access memory machines}
+
+\begin{itemize}[noitemsep,nolistsep]
+  \item Labels: LABEL
+  \item Functions: add, del, clr, $\leftarrow$, jmp, jmp$n$ ($n \in \Sigma$), continue
+\end{itemize}
+
+%Example implementations of few algorithms for RAM machines
+
+% \begin{multicols}{2}
+% 
+% \begin{minted}[mathescape,linenos,numbersep=5pt,gobble=0,framesep=2mm,xleftmargin=5pt]{c++}
+%    clr R
+%    clr Q
+%    P jmp0 ZERO
+%    P jmp1 ONE
+%    COPY_RESULT
+% ZERO
+%    del P
+%    jmp WR_Q_0
+% ONE
+%    del P
+%    jmp WR_Q_1
+% WR_R_0
+% WR_R_1
+% WR_Q_0
+% WR_Q_1
+% \end{minted}
+% \begin{minted}[mathescape,linenos,numbersep=5pt,gobble=0,framesep=2mm,xleftmargin=5pt]{c++}
+% MOVE_Q_TO_R
+% MOVE_R_TO_Q
+% COPY_RESULT
+%    Q jmp0 COPY_Q
+%    Q jmp1 COPY_Q
+%    P $\leftarrow$ R
+%    jmp END
+% COPY_Q
+%    P $\leftarrow$ Q
+%    jmp END
+% END
+%    clr R
+%    clr Q
+%    continue
+% \end{minted}
+% \end{multicols}
+
+\subsection{PRF - primitive recursive functions}
+Proofs that given functions are primitive recursive.
+
+\paragraph{Addition} $+(x,y) = x+y$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $+(x,0) = x = g(x) = P_{1,1}(x)$
+  \item $g = P_{1,1}$
+  \item $+(x,y+1) = +(x,y)+1 = h(x,y,+(x,y)) = S(P_{3,3}(x,y,+(x,y)))$
+  \item $h = S \circ P_{3,3}$
+\end{itemize}
+
+\paragraph{Multiplication} $*(x,y) = x*y$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $*(x,0) = x = g(x) = P_{1,1}(x)$
+  \item $g = P_{1,1}$
+  \item $*(x,y+1) = *(x,y)+x = h(x,y,+(x,y)) = +(P_{3,3}(x,y,+(x,y)),P_{3,1}(x,y,+(x,y)))$
+  \item $h = + \circ (P_{3,3},P_{3,1})$
+\end{itemize}
+
+\paragraph{Factorial} $!(x) = x!$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $!(0) = 1 = g() = S(Z_0())$
+  \item $g = S \circ Z_0$
+  \item $!(x+1) = !(x)*(x+1) = g(x,!(x)) = *(P_{2,2}(x,!(x)),S(P_{2,1}(x,!(x))))$
+  \item $g = * \circ (P_{2,2}, S \circ P_{2,1})$
+\end{itemize}
+
+\paragraph{Exponentiation} $exp(x,y) = x^y$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $exp(x,0) = 1 = g(x) = S(Z_1(x))$
+  \item $g = S \circ Z_1$
+  \item $exp(x,y+1) = exp(x,y)*x = g(x,y,exp(x,y)) = *(P_{3,3}(x,y,exp(x,y)),P_{3,1}(x,y,exp(x,y)))$
+  \item $g = * \circ (P_{3,3}, P_{3,1})$
+\end{itemize}
+
+\paragraph{Predecessor} $pred(x) = 
+\begin{cases}
+x-1 \mbox{ if } x>0 \\
+0 \mbox{ otherwise}
+\end{cases}$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $pred(0) = 0 = g() = Z_0()$
+  \item $g = Z_0$
+  \item $pred(x+1) = x = h(x) = P_{1,1}(x)$
+  \item $h = P_{1,1}$
+\end{itemize}
+
+\paragraph{Limited difference} $ld(x,y) = 
+\begin{cases}
+x-y \mbox{ if } x>y \\
+0 \mbox{ otherwise}
+\end{cases}$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $ld(x,0) = x = g(x) = P_{1,1}(x)$
+  \item $g = P_{1,1}$
+  \item $ld(x,y+1) = ld(x,y)-1 = h(x,y,ld(x,y)) = pred(P_{3,3}(x,y,ld(x,y)))$
+  \item $h = pred \circ P_{3,3}$
+\end{itemize}
+
+\paragraph{Sign} $sg(x) = \begin{cases}
+0 \mbox{ if } x=0 \\
+1 \mbox{ otherwise}
+\end{cases}$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $sg(0) = 0 = g() = Z_0()$
+  \item $g = Z_0$
+  \item $sg(x+1) = 1 = h(x) = S(Z_1(P_{1,1}(x)))$
+  \item $h = S \circ Z_1 \circ P_{1,1}$
+\end{itemize}
+
+% \paragraph{Comparison} $gt(x,y)$
+% 
+% $lt(x,y)$ 
+
+\paragraph{Quotient} $quo(x,y) = 
+\begin{cases}
+\frac{y}{x} \mbox{ if } x>0 \\
+0 \mbox{ otherwise}
+\end{cases}$
+\begin{itemize}[noitemsep,nolistsep]
+  \item $quo(x,y) = \mu_{0 \leq i \leq y} \left[ gt(*(x,S(z)),y) \right] $
+  %\item $g = Z_1$
+  %\item $ $
+  %\item $ $
+\end{itemize}
+
+% \paragraph{Bounded sum} 
+
+% \paragraph{Bounded product} 
+
+\paragraph{Bounded minimum} $f(x_1,\ldots,x_n,y) = 
+\mu_{0 \leq i \leq y} \left[ k(x_1,\ldots,x_n,i) = 0 \right] = $
+
+$\begin{cases}
+\mbox{minimal value, for which } k(x_1,\ldots,x_n,i) = 0 \\
+0 \mbox{ if such } i \mbox{ doesn't exist}
+\end{cases}$
+% \begin{itemize}[noitemsep,nolistsep]
+%   \item $quo(x,y) = \mu_{0 \leq i \leq y} \left[ gt(*(x,S(z)),y) \right] $
+% \end{itemize}
+
+% \paragraph{XOR} 
+% \begin{itemize}[noitemsep,nolistsep]
+%   \item 
+%   \item 
+%   \item 
+%   \item 
+% \end{itemize}
+
+% \paragraph{Equality test} 
+% \begin{itemize}[noitemsep,nolistsep]
+%   \item 
+%   \item 
+%   \item 
+%   \item 
+% \end{itemize}
+
+% \paragraph{Primality test} 
+
+% \paragraph{Divisibility test} 
+% \begin{itemize}[noitemsep,nolistsep]
+%   \item 
+%   \item 
+%   \item 
+%   \item 
+% \end{itemize}
+
+\pagebreak[4]
+
+\subsection{A(x,y) - Ackerman function}
+\begin{gather*}
+A(x,y) = \begin{cases}
+A(0,y) = y+1 \\
+A(x+1,0) = A(x,1) \\
+A(x+1,y+1) = A(x,A(x+1,y))
+\end{cases}
+\end{gather*}
+\noindent \textbf{3 basic properties}:
+\begin{enumerate}[noitemsep,nolistsep]
+  \item it is increasing
+  \item it has values greater than the arguments
+  \item first parameter affacts the result much more than the second one, i.e. $A(x+2,y) > A(x,2y) $
+\end{enumerate}
+
+\subsubsection{Ackerman funcion is not a PRF}
+\textbf{Theorem}: Ackerman funcion is not a PRF, because:
+\begin{gather*}
+\forall(f(x_1,\ldots,x_n))\exists k \mbox{ such that } A(k,\max\{x_1,\ldots,x_n\}) > f(x_1,\ldots,x_n)
+\end{gather*}
+where $f$ is any primitive recursive function of $n$ arguments.
+
+\textbf{Proof} by induction
+\begin{enumerate}
+  \item We show that such constant exists for all 3 basic PRFs.
+  \begin{enumerate}[noitemsep,nolistsep]
+    \item $A(0,\max\{x_1,\ldots,x_n\}) > Z_n(x_1,\ldots,x_n)$
+    \item $A(1,x) > S(x)$
+    \item $A(0,\max\{x_1,\ldots,x_n\}) > x = P_{n,i}(x_1,\ldots,x_n)$ where $i$ is index 
+    of argument with maximum value.
+   \end{enumerate}
+  \item We show that such constant exists for all compositions of those functions, and, therefore 
+  for any PRF.
+  
+  %emph
+  \textbf{Lemma 1}
+  
+  If for PRF $g,f_1,\ldots,f_n$ such that $g: \mathbb{N}^m \rightarrow \mathbb{N}$ and 
+  $f_{1 \ldots n}: \mathbb{N}^n\rightarrow \mathbb{N}$ we have constants defined in the theorem, 
+  then there is a constant $k$ such that:
+  
+  $A(k,\max\{x_1,\ldots,x_n\}) > [g \circ (f_1,\ldots,f_n)](x_1,\ldots,x_n)$ 
+  
+  \textbf{Lemma 2} 
+  
+  If for PRF $g,h$ such that $g: \mathbb{N}^n \rightarrow \mathbb{N}$ and 
+  $h: \mathbb{N}^{n+2} \rightarrow \mathbb{N}$ we have constants defined in the theorem,
+  then there is a constant $k$ such that:
+  
+  $A(k,\max\{x_1,\ldots,x_{n+1}\}) > f(x_1,\ldots,x_{n+1})$ where $f$ is obtained by PRS applied to
+  $g$ and $h$.
+\end{enumerate}
+
+\subsubsection{Ackerman function is recursive}
+\textbf{Theorem}: Ackerman function is recursive, because we can construct it using PRS and
+unbounded minimum.
+
+When we evaluate for example $A(2,1)$:
+\begin{gather*}
+A(2,1) = A(1,A(2,0)) = A(1,A(1,1)) = A(1,A(0,A(1,0))) = \ldots = A(0,4) = 5
+\end{gather*}
+We can convert the notation by omitting the $A$'s to the following:
+$(2,1) = (1,2,0) = (1,1,1) = (1,0,1,0) = \ldots = (0,4) = 5$ \\
+and then encode it using Gödel Encoding: $2^2 3^2 5^1 = 2^3 3^1 5^2 7^0 = 2^3 3^1 5^1 7^1 
+= 2^4 3^1 5^0 7^1 11^0 = \ldots = 2^2 3^0 5^4 = 2^1 3^5$
+
+Then, we may define the Trace function $\psi(x,y,n)$ being the Gödel number of $n$-th step of
+computation of $A(x,y)$. Then, we define $n_0$ as a step, in which we reach the final result.
+
+Full definition:
+\begin{gather*}
+\psi(x,y,n) = \begin{cases}
+\mbox{Gödel number of } n\mbox{-th step of computation of } A(x,y) \\
+\psi(x,y,n_0) \mbox{ for } n > n_0
+\end{cases}
+\end{gather*}
+
+$E(n,z)$ is the exponent of Gödel number $z$ at its $n$-th place. Example: $E(0,2^2 3^5 5^1) =
+E(0,(2,5,1)) = 2$ means that exponent of 2 (being 0th term of Gödel-encoded number) is equal to 2.
+$E(1,2^2 3^4 5^3) = E(1,(2,4,3)) = 4$ means that exponent of 3 (being 1st term of Gödel-encoded
+number) is equal 4.
+\begin{gather*}
+\eta(x,y) = n_0 = \mu_{n \geq 0} \left[ L(\psi(x,y,n)) = 1 \right]
+\end{gather*}
+\begin{gather*}
+A(x,y) = E(1,\psi(x,y,\eta(x,y)))
+\end{gather*}
+
+\pagebreak[4]
+
+\section{Test \#2}
+
+Sorry, this section will probably not be updated, because I already passed this subject ;)
+
+\subsection{Recursive functions}
+
+\subsection{Classes of languages, problems, functions}
+
+\paragraph{Universal language}
+
+\paragraph{Diagonal language}
+
+\paragraph{Equivalence of groups of classes of languages, problems, functions}
+
+\subsection{Cook's theorem}
+
+\subsection{P vs. NP}
+
+
+\end{document}
